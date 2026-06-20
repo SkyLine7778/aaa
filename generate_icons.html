@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>生成图标</title></head>
+<body>
+    <canvas id="c" width="512" height="512"></canvas>
+    <script>
+        const c = document.getElementById('c');
+        const ctx = c.getContext('2d');
+        
+        // 背景
+        const grad = ctx.createLinearGradient(0, 0, 512, 512);
+        grad.addColorStop(0, '#667eea');
+        grad.addColorStop(1, '#764ba2');
+        ctx.fillStyle = grad;
+        ctx.beginPath(); ctx.roundRect(40, 40, 432, 432, 80); ctx.fill();
+        
+        // 太阳
+        ctx.fillStyle = '#FFD700';
+        ctx.beginPath(); ctx.arc(256, 230, 70, 0, Math.PI*2); ctx.fill();
+        
+        // 光线
+        ctx.strokeStyle = '#FFD700';
+        ctx.lineWidth = 8;
+        for (let i=0; i<8; i++) {
+            const a = i*Math.PI/4;
+            ctx.beginPath();
+            ctx.moveTo(256+Math.cos(a)*85, 230+Math.sin(a)*85);
+            ctx.lineTo(256+Math.cos(a)*110, 230+Math.sin(a)*110);
+            ctx.stroke();
+        }
+        
+        // 云
+        ctx.fillStyle = 'white';
+        ctx.beginPath(); ctx.arc(180, 320, 40, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(220, 300, 45, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(260, 310, 38, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(300, 325, 35, 0, Math.PI*2); ctx.fill();
+        
+        // 保存
+        const link = document.createElement('a');
+        link.download = 'icon-512.png';
+        link.href = c.toDataURL();
+        link.click();
+    </script>
+</body>
+</html>
